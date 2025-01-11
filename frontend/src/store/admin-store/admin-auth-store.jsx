@@ -16,9 +16,9 @@ export const useAdminAuthStore = create(
               Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
             },
           });
-          const { admin } = response.data;
-          console.log(response);
-          set({ currentAdmin: admin, isLoading: false, error: null });
+
+          set({ currentAdmin: response.data, isLoading: false, error: null });
+          return response;
         } catch (error) {
           set({
             isLoading: false,

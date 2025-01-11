@@ -13,8 +13,10 @@ const useAdminLogoutStore = create()(
               Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
             },
           });
-          set({ isLoggedIn: false });
           sessionStorage.clear();
+          localStorage.removeItem("admin-auth-store");
+          set({ isLoggedIn: false });
+
           return response;
         } catch (error) {
           console.error("Logout  failed:", error);

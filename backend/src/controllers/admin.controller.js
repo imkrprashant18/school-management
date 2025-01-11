@@ -2,7 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { Admin } from "../models/admin.model.js";
-
+import { UploadOnCloudinary } from "../utils/cloudinary.js";
 const generateAccessandRefereshToken = async (adminId) => {
   try {
     const admin = await Admin.findById(adminId);
@@ -115,4 +115,40 @@ const logOutAdmin = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Admin logged Out"));
 });
 
-export { adminRegister, loginAdmin, getCurrentAdmin, logOutAdmin };
+const updateAdminProfile = asyncHandler(async (req, res) => {
+  const { email, fullName } = req.body;
+  if (!email && !fullName) {
+    throw new ApiError(400, "All fields are required");
+  }
+  const avatarLocalPath = req.files?.image[0]?.path;
+
+  if (!avatarLocalPath) {
+    throw new ApiError(400, "Avatar file is required");
+  }
+  const avatar = await UploadOnCloudinary(avatarLocalPath);
+  if (!avatar) {
+    throw new ApiError(400, "Avatar file is required");
+  }
+  const admin = await Admin.findByIdAndUpdate(
+    req.admin?._id,
+    {
+      $set: {
+        fullName,
+        email,
+        image: avatar.url,
+      },
+    },
+    { new: true }
+  ).select("-password --refreshToken");
+  return res
+    .status(200)
+    .json(new ApiResponse(200, admin, "Profile updated successfully"));
+});
+
+export {
+  adminRegister,
+  loginAdmin,
+  getCurrentAdmin,
+  logOutAdmin,
+  updateAdminProfile,
+};

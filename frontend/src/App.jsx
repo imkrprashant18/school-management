@@ -13,6 +13,8 @@ const AdminPublicRoute = lazy(() =>
 const AdminProtectedRoute = lazy(() =>
   import("./components/protected-route/Admin-protected-route")
 );
+const AdminProfile = lazy(() => import("./pages/profile/Admin-profile"));
+const AdminSettings = lazy(() => import("./pages/settings/admin-settings"));
 function App() {
   return (
     <Router>
@@ -40,6 +42,22 @@ function App() {
             element={
               <AdminProtectedRoute>
                 <AdminDashboard />
+              </AdminProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/profile"
+            element={
+              <AdminProtectedRoute>
+                <AdminProfile />
+              </AdminProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/settings"
+            element={
+              <AdminProtectedRoute>
+                <AdminSettings />
               </AdminProtectedRoute>
             }
           />

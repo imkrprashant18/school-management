@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
 import { LogOut } from "lucide-react";
 import useAdminLogoutStore from "../../store/admin-store/admin-logout-store";
 import { useNavigate } from "react-router-dom";
-const AdminLogout = () => {
+
+const AdminLogout = ({ isSidebarOpen }) => {
   const navigate = useNavigate();
   const { logout } = useAdminLogoutStore();
   const handleLogout = async () => {
@@ -12,10 +14,16 @@ const AdminLogout = () => {
     <>
       <div
         onClick={handleLogout}
-        className="w-full px-4  cursor-pointer  flex  items-center  gap-4"
+        className="w-full px-4  absolute bottom-6 right-1  cursor-pointer  flex  items-center  gap-4"
       >
-        <LogOut size={20} />
-        <h1 className=" dark:text-white text-md font-semibold">Logout</h1>
+        {isSidebarOpen ? (
+          <>
+            <LogOut size={20} className="" />
+            <h1 className="dark:text-white text-md font-semibold">Logout</h1>
+          </>
+        ) : (
+          <LogOut size={20} />
+        )}
       </div>
     </>
   );

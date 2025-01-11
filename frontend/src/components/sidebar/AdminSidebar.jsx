@@ -8,7 +8,7 @@ import {
   Calendar,
   Settings,
   MessageSquare,
-  DollarSign,
+  UserRoundPen,
   BarChart,
   ChevronLeft,
   ChevronRight,
@@ -21,14 +21,15 @@ const AdminSidebar = () => {
 
   const menuItems = [
     { icon: Home, label: "Dashboard", path: "/admin/dashboard" },
-    { icon: Users, label: "Students", path: "/students" },
-    { icon: Users, label: "Teachers", path: "/teachers" },
+    { icon: Users, label: "Students", path: "/admin/students" },
+    { icon: Users, label: "Teachers", path: "/admin/parents" },
+    { icon: Users, label: "Parents", path: "/admin/parents" },
     { icon: GraduationCap, label: "Classes", path: "/classes" },
     { icon: Calendar, label: "Schedule", path: "/schedule" },
     { icon: MessageSquare, label: "Messages", path: "/messages" },
-    { icon: DollarSign, label: "Payments", path: "/payments" },
+    { icon: UserRoundPen, label: "Profile", path: "/admin/profile" },
     { icon: BarChart, label: "Reports", path: "/reports" },
-    { icon: Settings, label: "Settings", path: "/settings" },
+    { icon: Settings, label: "Settings", path: "/admin/settings" },
   ];
 
   return (
@@ -57,7 +58,7 @@ const AdminSidebar = () => {
           transition={{ duration: 0.2 }}
           className="ml-2 font-bold text-lg"
         >
-          {isExpanded && "School Admin"}
+          {isExpanded && "School Verse"}
         </motion.span>
       </div>
 
@@ -90,8 +91,8 @@ const AdminSidebar = () => {
             </Link>
           );
         })}
-        <AdminLogout />
       </nav>
+      <AdminLogout isSidebarOpen={isExpanded} />
     </motion.div>
   );
 };

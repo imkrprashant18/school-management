@@ -2,7 +2,8 @@
 import { Navigate } from "react-router-dom";
 
 const AdminPublic = ({ children }) => {
-  if (sessionStorage.getItem("accessToken")) {
+  const token = sessionStorage.getItem("accessToken");
+  if (token) {
     return <Navigate to="/admin/dashboard" />;
   } else {
     return children;

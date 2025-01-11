@@ -4,11 +4,13 @@ import { Navigate } from "react-router-dom";
 import { useAdminAuthStore } from "../../store/admin-store/admin-auth-store";
 const AdminProtectedRoute = ({ children }) => {
   const { currentAdmin, getCurrentUser } = useAdminAuthStore();
+
   useEffect(() => {
-    if (currentAdmin) {
+    if (!currentAdmin) {
       getCurrentUser();
     }
   }, [currentAdmin, getCurrentUser]);
+
   if (sessionStorage.getItem("accessToken")) {
     return children;
   } else {
