@@ -6,6 +6,7 @@ const useAdminLogoutStore = create()(
   persist(
     (set) => ({
       isLoggedIn: true,
+      userData: null,
       logout: async () => {
         try {
           const response = await axios.post("/api/v1/admin/logout", {
@@ -13,17 +14,14 @@ const useAdminLogoutStore = create()(
               Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
             },
           });
-          sessionStorage.clear();
           localStorage.removeItem("admin-auth-store");
-          set({ isLoggedIn: false });
-
+          sessionStorage.clear();
+          set({ isLoggedIn: false, userData: null });
           return response;
         } catch (error) {
           console.error("Logout  failed:", error);
         }
       },
-
-      setLoggedIn: (status) => set({ isLoggedIn: status }),
     }),
     {
       name: "admin-logout-store",

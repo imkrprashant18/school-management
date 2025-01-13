@@ -45,6 +45,7 @@ export const useAdminProfileStore = create(
     }),
     {
       name: "admin-profile-store",
+      getStorage: localStorage,
     }
   )
 );

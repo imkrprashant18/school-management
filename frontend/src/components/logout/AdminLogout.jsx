@@ -8,6 +8,7 @@ const AdminLogout = ({ isSidebarOpen }) => {
   const { logout } = useAdminLogoutStore();
   const handleLogout = async () => {
     await logout();
+    window.location.reload();
     navigate("/");
   };
   return (

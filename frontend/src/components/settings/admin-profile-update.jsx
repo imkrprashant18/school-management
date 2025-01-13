@@ -5,8 +5,7 @@ import { useAdminProfileStore } from "../../store/admin-store/admin-update-profi
 
 export default function AdminProfileUpdate() {
   const { currentAdmin } = useAdminAuthStore();
-  const { updateProfile, isLoading } = useAdminProfileStore();
-
+  const { updateProfile, isLoading, profileData } = useAdminProfileStore();
   const [formData, setFormData] = useState({
     email: "",
     fullName: "",
@@ -17,15 +16,18 @@ export default function AdminProfileUpdate() {
   const fileInputRef = useRef(null);
 
   useEffect(() => {
-    if (currentAdmin) {
+    if (currentAdmin || profileData) {
       setFormData({
-        email: currentAdmin?.data?.email || "",
-        fullName: currentAdmin?.data?.fullName || "",
+        email: currentAdmin?.data?.email || profileData?.data?.email || "",
+        fullName:
+          currentAdmin?.data?.fullName || profileData?.data?.fullName || "",
         image: null,
       });
-      setImagePreview(currentAdmin?.data?.image || null);
+      setImagePreview(
+        currentAdmin?.data?.image || profileData?.data?.image || null
+      );
     }
-  }, [currentAdmin]);
+  }, [currentAdmin, profileData]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -68,6 +70,7 @@ export default function AdminProfileUpdate() {
 
     try {
       await updateProfile(data);
+      window.location.reload();
       setError("");
     } catch (error) {
       console.log(error);

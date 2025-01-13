@@ -5,6 +5,10 @@ import {
   getCurrentAdmin,
   logOutAdmin,
   updateAdminProfile,
+  createStudent,
+  deleteStudent,
+  getStudents,
+  getStudentById,
 } from "../controllers/admin.controller.js";
 import { upload } from "../middelware/multer.middelware.js";
 import { adminVerifyJwt } from "../middelware/adminAuth.js";
@@ -26,4 +30,10 @@ router.route("/update-profile").post(
   ]),
   updateAdminProfile
 );
+
+// student create
+router.route("/create-student").post(adminVerifyJwt, createStudent);
+router.route("/delete-student/:id").delete(adminVerifyJwt, deleteStudent);
+router.route("/get-students").get(adminVerifyJwt, getStudents);
+router.route("/get-student/:id").get(adminVerifyJwt, getStudentById);
 export default router;

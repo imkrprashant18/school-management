@@ -15,6 +15,12 @@ const AdminProtectedRoute = lazy(() =>
 );
 const AdminProfile = lazy(() => import("./pages/profile/Admin-profile"));
 const AdminSettings = lazy(() => import("./pages/settings/admin-settings"));
+const GetAllStudents = lazy(() =>
+  import("./pages/admin-students/get-all-students")
+);
+const GetAllStudentsById = lazy(() =>
+  import("./pages/admin-students/get-all-students-by-id")
+);
 function App() {
   return (
     <Router>
@@ -58,6 +64,22 @@ function App() {
             element={
               <AdminProtectedRoute>
                 <AdminSettings />
+              </AdminProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/students"
+            element={
+              <AdminProtectedRoute>
+                <GetAllStudents />
+              </AdminProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/student/:id"
+            element={
+              <AdminProtectedRoute>
+                <GetAllStudentsById />
               </AdminProtectedRoute>
             }
           />
